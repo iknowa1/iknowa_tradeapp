@@ -22,4 +22,5 @@ abstract class Routes {
   static const biometricAuthentication = '/biometricAuthentication';
   static const setbiometricPascode = '/setbiometricPascode';
   static const dashboard = '/dashboard';
+  static const dashboardProfile = '/dashboardProfile';
 }

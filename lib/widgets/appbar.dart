@@ -16,7 +16,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.onTapBack,
       this.leadingWidget,
       this.actions = const [],
-      this.actionRightPadding = 20});
+      this.actionRightPadding = 20,
+      this.leadingWidth});
 
   final String? leadingImage;
   final String? titleText;
@@ -27,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leadingWidget;
   final double? actionRightPadding;
   final Color? backgroundColor;
+  final double? leadingWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor ?? AppColors.textWhite,
       scrolledUnderElevation: 0.0, // This will fix the problem
       elevation: 0,
+      leadingWidth: leadingWidth,
       leading: Container(
         margin: const EdgeInsets.only(left: 12),
         child: leadingWidget ??

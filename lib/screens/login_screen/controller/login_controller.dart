@@ -24,8 +24,8 @@ class LoginController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    // emailController.text = "kishan.suthar@esparkbizmail.com";
-    // passwordController.text = "Kishansuthar123@";
+    emailController.text = "kishan.suthar@esparkbizmail.com";
+    passwordController.text = "Kishansuthar123@";
   }
 
   Future<bool> sendEmailOTP({

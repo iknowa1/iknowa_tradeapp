@@ -19,6 +19,8 @@ import 'package:trade_app/screens/Registration_module/passowrd_registration_scre
 import 'package:trade_app/screens/Registration_module/passowrd_registration_screen/view/password_registration_screen.dart';
 import 'package:trade_app/screens/biometric_authentication_screen/binding/bio_metric_authentication_binding.dart';
 import 'package:trade_app/screens/biometric_authentication_screen/view/bio_metric_authentication_screen.dart';
+import 'package:trade_app/screens/dashboard_module/profile_screen/binding/profile_binding.dart';
+import 'package:trade_app/screens/dashboard_module/profile_screen/view/profile_screen.dart';
 import 'package:trade_app/screens/dashboard_screen/binding/dashboard_binding.dart';
 import 'package:trade_app/screens/dashboard_screen/view/dashboard_screen.dart';
 import 'package:trade_app/screens/forgot_password_email_link_screen/binding/forgot_password_email_link_binding.dart';
@@ -125,6 +127,11 @@ class AppPages {
       name: Routes.dashboard,
       page: () => const DashboardScreen(),
       binding: DashboardBinding(),
+    ),
+    GetPage(
+      name: Routes.dashboardProfile,
+      page: () => const ProfileScreen(),
+      binding: ProfileBinding(),
     ),
   ];
 }
