@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
 import 'package:trade_app/screens/forgot_password_screen/controller/forgot_password_controller.dart';
+import 'package:trade_app/widgets/custom_home_appbar.dart';
 import '../../../route/app_pages.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_diamentions.dart';
 import '../../../utils/app_fonts.dart';
 import '../../../utils/app_string.dart';
+import '../../../utils/imagepath.dart';
 import '../../../utils/validation_string.dart';
 import '../../../widgets/appbar.dart';
 import '../../../widgets/base_screen.dart';
@@ -20,7 +23,7 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      appBar: CustomAppBar(),
+      // appBar: CustomAppBar(),
       body: Container(
         width: double.maxFinite,
         decoration: const BoxDecoration(
@@ -38,6 +41,27 @@ class ForgotPasswordScreen extends GetView<ForgotPasswordController> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Row(children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 0),
+                        child: InkWell(
+                              onTap: () {
+                               Navigator.of(context).pop();
+                              },
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: SvgPicture.asset(
+                                ImagePath.back,
+                                height: 44,
+                                width: 44,
+                              ),
+                            ),
+                      ),
+                      Spacer(),
+                    ],),
+                    SizedBox(height: 20,),
                     SizedBox(
                       width: double.maxFinite,
                       child: Text(

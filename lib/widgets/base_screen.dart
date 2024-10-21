@@ -59,7 +59,6 @@ class BaseScreen extends StatelessWidget {
       // Determines if the screen should resize to avoid overlapping with the keyboard.
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       // Sets the background color of the screen.
-
       backgroundColor: backgroundColor,
       // Sets the app bar for the screen.
       appBar: appBar,

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:trade_app/screens/Registration_module/mobile_otp_verification_screen/controller/mobile_otp_verification_controller.dart';
 import 'package:trade_app/utils/app_string.dart';
@@ -7,6 +8,7 @@ import 'package:trade_app/widgets/appbar.dart';
 import '../../../../route/app_pages.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_fonts.dart';
+import '../../../../utils/imagepath.dart';
 import '../../../../widgets/OTPView/otp_field.dart';
 import '../../../../widgets/OTPView/otp_field_style.dart';
 import '../../../../widgets/OTPView/style.dart';
@@ -19,7 +21,7 @@ class MobileOtpVerificationScreen extends GetView<MobileOtpVerificationControlle
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      appBar: CustomAppBar(),
+      // appBar: CustomAppBar(),
       body: Container(
         width: double.maxFinite,
         decoration: const BoxDecoration(
@@ -30,6 +32,27 @@ class MobileOtpVerificationScreen extends GetView<MobileOtpVerificationControlle
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
+                Row(children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: SvgPicture.asset(
+                        ImagePath.back,
+                        height: 44,
+                        width: 44,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                ],),
+                SizedBox(height: 20,),
                 Expanded(
                     child: SingleChildScrollView(
                   child: Column(

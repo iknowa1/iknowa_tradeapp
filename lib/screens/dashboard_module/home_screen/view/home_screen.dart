@@ -1,18 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-import 'package:trade_app/screens/dashboard_module/chat_screen/controller/chat_controller.dart';
+import 'package:trade_app/main.dart';
 import 'package:trade_app/screens/dashboard_module/home_screen/controller/home_controller.dart';
-import 'package:trade_app/screens/dashboard_module/profile_screen/controller/profile_controller.dart';
 import 'package:trade_app/utils/app_colors.dart';
 import 'package:trade_app/widgets/base_screen.dart';
-import 'package:trade_app/widgets/custom_animated_button.dart';
 import 'package:trade_app/widgets/custom_home_appbar.dart';
-
 import '../../../../utils/app_diamentions.dart';
 import '../../../../utils/app_fonts.dart';
 import '../../../../utils/imagepath.dart';
@@ -31,7 +28,7 @@ class HomeScreen extends GetView<HomeController> {
           child: Column(
             children: [
               CustomHomeAppBar(title: "Home", onTap: () {}),
-              SizedBox(
+              const SizedBox(
                 height: 3,
               ),
               Expanded(
@@ -41,11 +38,11 @@ class HomeScreen extends GetView<HomeController> {
                     color: AppColors.backgroundLightBlue,
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        JobsNearYouView(),
-                        SizedBox(
+                        const JobsNearYouView(),
+                        const SizedBox(
                           height: 15,
                         ),
                         Padding(
@@ -115,7 +112,7 @@ class HomeScreen extends GetView<HomeController> {
                                 ],
                               )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Padding(
@@ -293,18 +290,18 @@ class HomeScreen extends GetView<HomeController> {
                                 ],
                               )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        WorkStationFlowView(),
-                        SizedBox(
+                        const WorkStationFlowView(),
+                        const SizedBox(
                           height: 15,
                         ),
                         Padding(
                             padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
                             child: Container(
                                 width: double.maxFinite,
-                                padding: EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
+                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black.withOpacity(0.1), // Changed to black for testing
@@ -315,53 +312,53 @@ class HomeScreen extends GetView<HomeController> {
                                 ),
                                 child: Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Row(
                                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SemiboldTitleText(title: "Job Overview"),
-                                        Spacer(),
+                                        const SemiboldTitleText(title: "Job Overview"),
+                                        const Spacer(),
                                         SeeAllTextView(text: "Manage Jobs", onTap: () {}),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
-                                    Container(
+                                    SizedBox(
                                         width: double.maxFinite,
                                         child: Text(
                                           "01 Team Members",
                                           style: AppFonts.regular(15, AppColors.textDarkGray),
                                         )),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-                                    DashLineView(
+                                    const DashLineView(
                                       dashColor: AppColors.dashLineColor,
                                       fillRate: 0.8,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
-                                    JobOverViewSection(),
-                                    SizedBox(
+                                    const JobOverViewSection(),
+                                    const SizedBox(
                                       height: 20,
                                     )
                                   ],
                                 ))),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Padding(
                             padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
                             child: Container(
                                 width: double.maxFinite,
-                                padding: EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
+                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black.withOpacity(0.1), // Changed to black for testing
@@ -372,37 +369,37 @@ class HomeScreen extends GetView<HomeController> {
                                 ),
                                 child: Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Row(
                                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SemiboldTitleText(title: "Teams"),
-                                        Spacer(),
+                                        const SemiboldTitleText(title: "Teams"),
+                                        const Spacer(),
                                         SeeAllTextView(text: "Manage Teams", onTap: () {}),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
-                                    Container(
+                                    SizedBox(
                                         width: double.maxFinite,
                                         child: Text(
                                           "01 Team Members",
                                           style: AppFonts.regular(15, AppColors.textDarkGray),
                                         )),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-                                    DashLineView(
+                                    const DashLineView(
                                       dashColor: AppColors.dashLineColor,
                                       fillRate: 0.8,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     SizedBox(
@@ -451,7 +448,7 @@ class HomeScreen extends GetView<HomeController> {
                                     )
                                   ],
                                 ))),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Padding(
@@ -567,7 +564,7 @@ class HomeScreen extends GetView<HomeController> {
                                         ))
                                   ],
                                 ))),
-                      ],
+                    ],
                     ),
                   ),
                 ),
@@ -585,7 +582,7 @@ class DashLineView extends StatelessWidget {
   final double fillRate; // [0, 1] totalDashSpace/totalSpace
   final Axis direction;
 
-  DashLineView({this.dashHeight = 1, this.dashWith = 8, this.dashColor = Colors.black, this.fillRate = 0.5, this.direction = Axis.horizontal});
+  const DashLineView({super.key, this.dashHeight = 1, this.dashWith = 8, this.dashColor = Colors.black, this.fillRate = 0.5, this.direction = Axis.horizontal});
 
   @override
   Widget build(BuildContext context) {
@@ -594,6 +591,8 @@ class DashLineView extends StatelessWidget {
         final boxSize = direction == Axis.horizontal ? constraints.constrainWidth() : constraints.constrainHeight();
         final dCount = (boxSize * fillRate / dashWith).floor();
         return Flex(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          direction: direction,
           children: List.generate(dCount, (_) {
             return SizedBox(
               width: direction == Axis.horizontal ? dashWith : dashHeight,
@@ -603,240 +602,320 @@ class DashLineView extends StatelessWidget {
               ),
             );
           }),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          direction: direction,
         );
       },
     );
   }
 }
 
-class JobOverViewSection extends StatelessWidget {
-  JobOverViewSection();
+class SquareContainer extends StatelessWidget {
+
+  final String imageUrl;
+  final Color color;
+  final String number;
+  final String status;
+
+  SquareContainer({
+    required this.imageUrl,
+    required this.color,
+    required this.number,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: (((MediaQuery.of(context).size.width / 3) - 20) * 2),
-      child: Column(
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                  color: AppColors.textBlue.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobProgress,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "05",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  color: AppColors.textYellow.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobNotStart,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "02",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  color: AppColors.backgroundBrown.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobEstimate,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "01",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                  color: AppColors.backgroundRed.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobReject,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "01",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  color: AppColors.backgroundPurple.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobDraft,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "03",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  color: AppColors.backgroundGreen.withOpacity(0.10),
-                  height: (MediaQuery.of(context).size.width / 3) - 36,
-                  width: (MediaQuery.of(context).size.width / 3) - 36,
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        ImagePath.jobComplete,
-                        width: 25,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "12",
-                        style: AppFonts.regular(20, AppColors.textDarkGray),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        "In progress",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1, // 1:1 ratio to make it square
+        child: Container(
+          color: color,
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          margin: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10),
+                        SvgPicture.asset(
+                          imageUrl,
+                          width: 25,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          number,
+                          style: AppFonts.regular(20, AppColors.textDarkGray),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "In progress",
+                          style: AppFonts.regular(12, AppColors.textDarkGray),
+                        )
+                      ],
+                    )// Space between containers
+        ),
       ),
     );
   }
+}
+
+class JobOverViewSection extends StatelessWidget {
+  const JobOverViewSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+          ],
+        ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container(
+  //     // height: (((MediaQuery.of(context).size.width / 3) - 20) * 2) + 22,
+  //     // width: (((MediaQuery.of(context).size.width / 3) - 20) * 2) + 20,
+  //     child: Column(
+  //       children: [
+  //         Expanded(
+  //           child: Row(
+  //             children: [
+  //               Container(
+  //                 color: AppColors.textBlue.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 padding: const EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobProgress,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "05",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Container(
+  //                 color: AppColors.textYellow.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 padding: const EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobNotStart,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "02",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12.w, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Container(
+  //                 color: AppColors.backgroundBrown.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 34,
+  //                 padding: const EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobEstimate,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "01",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         const SizedBox(
+  //           height: 10,
+  //         ),
+  //         Expanded(
+  //           child: Row(
+  //             children: [
+  //               Container(
+  //                 color: AppColors.backgroundRed.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 padding: const EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobReject,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "01",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Container(
+  //                 color: AppColors.backgroundPurple.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 padding: const EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobDraft,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "03",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Container(
+  //                 color: AppColors.backgroundGreen.withOpacity(0.10),
+  //                 height: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 width: (MediaQuery.of(context).size.width / 3) - 36,
+  //                 padding: EdgeInsets.all(10),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   mainAxisAlignment: MainAxisAlignment.start,
+  //                   children: [
+  //                     SvgPicture.asset(
+  //                       ImagePath.jobComplete,
+  //                       width: 25,
+  //                       fit: BoxFit.fitWidth,
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 5,
+  //                     ),
+  //                     Text(
+  //                       "12",
+  //                       style: AppFonts.regular(20, AppColors.textDarkGray),
+  //                     ),
+  //                     const SizedBox(
+  //                       height: 8,
+  //                     ),
+  //                     Text(
+  //                       "In progress",
+  //                       style: AppFonts.regular(12, AppColors.textDarkGray),
+  //                     )
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
 class WorkStationFlowView extends StatelessWidget {
@@ -1328,18 +1407,18 @@ class WorkStationFlowView extends StatelessWidget {
                               textAlign: TextAlign.left,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -1351,7 +1430,7 @@ class WorkStationFlowView extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 13,
                       ),
                       Text(
@@ -1362,7 +1441,7 @@ class WorkStationFlowView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 )
               ],

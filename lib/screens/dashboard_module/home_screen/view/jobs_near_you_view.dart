@@ -8,6 +8,7 @@ import '../../../../utils/app_diamentions.dart';
 import '../../../../utils/app_fonts.dart';
 import '../../../../widgets/see_all_text_view.dart';
 import '../../../../widgets/semibold_title_text.dart';
+import 'home_screen.dart';
 
 class JobsNearYouView extends StatelessWidget {
   const JobsNearYouView({super.key});
@@ -31,7 +32,7 @@ class JobsNearYouView extends StatelessWidget {
           ),
           const SizedBox(height: Dimen.margin14),
           SizedBox(
-            height: Dimen.margin217,
+            height: Dimen.margin242,
             width: double.infinity,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,

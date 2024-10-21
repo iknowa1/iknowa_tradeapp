@@ -19,10 +19,8 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      appBar: CustomAppBar(),
       body: Container(
         width: double.maxFinite,
-        // color: Colors.red,
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [AppColors.white, AppColors.gradientGrayBottomColor], begin: Alignment.topCenter, end: Alignment.bottomCenter, stops: [0.1, 0.6]),
         ),
@@ -36,6 +34,27 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        Row(children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: SvgPicture.asset(
+                                ImagePath.back,
+                                height: 44,
+                                width: 44,
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                        ],),
+                        SizedBox(height: 20,),
                         SizedBox(
                           width: double.maxFinite,
                           child: Text(

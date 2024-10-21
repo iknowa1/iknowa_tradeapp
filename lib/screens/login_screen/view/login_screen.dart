@@ -37,158 +37,133 @@ class LoginScreen extends GetView<LoginController> {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Text(
-                      "Welcome to iknowa!",
-                      textAlign: TextAlign.left,
-                      style: AppFonts.regular(30, AppColors.textBlack),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-                    style: AppFonts.regular(15, AppColors.textDarkGray),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: Dimen.margin24),
-                    child: BaseTextFormField(
-                      headerText: "Email address",
-                      controller: controller.emailController,
-                      hintText: "Enter Email Address",
-                      keyboardType: TextInputType.emailAddress,
-                      maxLine: 1,
-                    ),
-                  ),
-                  Obx(() {
-                    return BaseTextFormField(
-                      headerText: "Password",
-                      controller: controller.passwordController,
-                      hintText: "Enter Password",
-                      suffixIcon: controller.isShowPassword.value ? ImagePath.passwordHide : ImagePath.passwordShow,
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: controller.isShowPassword.value,
-                      maxLine: 1,
-                      onTapSuffixIcon: () {
-                        controller.isShowPassword.toggle();
-                      },
-                    );
-                  }),
-                  Container(
-                    width: double.maxFinite,
-                    margin: const EdgeInsets.only(top: 16),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Forgot Password?",
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Get.toNamed(Routes.forgotpassword);
-                                // Navigator.pushNamed(context, AppRoutes.);
-                              },
-                            style: const TextStyle(
-                              color: AppColors.textBlue,
-                              fontFamily: "Mulish",
-                              fontSize: 17,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ],
+              child: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: Text(
+                        "Welcome to iknowa!",
+                        textAlign: TextAlign.left,
+                        style: AppFonts.regular(30, AppColors.textBlack),
                       ),
-                      textAlign: TextAlign.right,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Obx(() {
-                    return CustomAnimatedButton(
-                      isLoading: controller.isLoading.value,
-                      text: "Continue",
-                      onPressed: () async {
-                        if (controller.loginValidation()) {
-                          LoginModel response = await controller.authLoginUser();
-                          if (response.user?.id != null) {
-                            await AppPreference.instance.setString(AppString.prefKeyUserLoginData, json.encode(response.toJson()));
-                            CustomToastification().showToast("Login success", type: ToastificationType.success);
-
-                            if (response.user!.verifiedEmail == false) {
-                            } else {
-                              Get.toNamed(Routes.setbiometricPascode);
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+                      style: AppFonts.regular(15, AppColors.textDarkGray),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: Dimen.margin24),
+                      child: BaseTextFormField(
+                        headerText: "Email address",
+                        controller: controller.emailController,
+                        hintText: "Enter Email Address",
+                        keyboardType: TextInputType.emailAddress,
+                        maxLine: 1,
+                      ),
+                    ),
+                    Obx(() {
+                      return BaseTextFormField(
+                        headerText: "Password",
+                        controller: controller.passwordController,
+                        hintText: "Enter Password",
+                        suffixIcon: controller.isShowPassword.value ? ImagePath.passwordHide : ImagePath.passwordShow,
+                        keyboardType: TextInputType.emailAddress,
+                        obscureText: controller.isShowPassword.value,
+                        maxLine: 1,
+                        onTapSuffixIcon: () {
+                          controller.isShowPassword.toggle();
+                        },
+                      );
+                    }),
+                    Container(
+                      width: double.maxFinite,
+                      margin: const EdgeInsets.only(top: 16),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Forgot Password?",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(Routes.forgotpassword);
+                                  // Navigator.pushNamed(context, AppRoutes.);
+                                },
+                              style: const TextStyle(
+                                color: AppColors.textBlue,
+                                fontFamily: "Mulish",
+                                fontSize: 17,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Obx(() {
+                      return CustomAnimatedButton(
+                        isLoading: controller.isLoading.value,
+                        text: "Continue",
+                        onPressed: () async {
+                          if (controller.loginValidation()) {
+                            LoginModel response = await controller.authLoginUser();
+                            if (response.user?.id != null) {
+                              await AppPreference.instance.setString(AppString.prefKeyUserLoginData, json.encode(response.toJson()));
+                              CustomToastification().showToast("Login success", type: ToastificationType.success);
+                
+                              if (response.user!.verifiedEmail == false) {
+                              } else {
+                                Get.toNamed(Routes.setbiometricPascode);
+                              }
                             }
                           }
-                        }
-                        // Get.toNamed(Routes.forgotpassword);
-                      },
-                    );
-                  }),
-                  Spacer(),
-                  Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(top: 16),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Don’t have an account?",
-                            style: AppFonts.regular(15, AppColors.textBlack),
-                          ),
-                          const TextSpan(text: " "),
-                          TextSpan(
-                            text: "Register",
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Get.toNamed(Routes.emailRegistration);
-                                // Navigator.pushNamed(context, AppRoutes.);
-                              },
-                            style: const TextStyle(fontSize: 15, color: AppColors.backgroundYellow, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.underline),
-                          ),
-                        ],
+                          // Get.toNamed(Routes.forgotpassword);
+                        },
+                      );
+                    }),
+                    Spacer(),
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(top: 16),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Don’t have an account?",
+                              style: AppFonts.regular(15, AppColors.textBlack),
+                            ),
+                            const TextSpan(text: " "),
+                            TextSpan(
+                              text: "Register",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(Routes.emailRegistration);
+                                  // Navigator.pushNamed(context, AppRoutes.);
+                                },
+                              style: const TextStyle(fontSize: 15, color: AppColors.backgroundYellow, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.underline),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-
-              // Positioned(
-              //     bottom: 0,
-              //     left: 0,
-              //     right: 0,
-              //     child: Container(
-              //       alignment: Alignment.center,
-              //       margin: const EdgeInsets.only(top: 16),
-              //       child: Text.rich(
-              //         TextSpan(
-              //           children: [
-              //             TextSpan(
-              //               text: "Don’t have an account?",
-              //               style: AppFonts.regular(15, AppColors.textBlack),
-              //             ),
-              //             const TextSpan(text: " "),
-              //             TextSpan(
-              //               text: "Register",
-              //               recognizer: TapGestureRecognizer()
-              //                 ..onTap = () {
-              //                   Get.toNamed(Routes.emailRegistration);
-              //                   // Navigator.pushNamed(context, AppRoutes.);
-              //                 },
-              //               style: const TextStyle(fontSize: 15, color: AppColors.backgroundYellow, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.underline),
-              //             ),
-              //           ],
-              //         ),
-              //         textAlign: TextAlign.center,
-              //       ),
-              //     ))
+              ),
             ),
           ),
         ));
