@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:trade_app/screens/login_screen/model/login_model.dart';
 
 import '../../core/common/app_preferences.dart';
 import '../../core/common/url_provider.dart';
@@ -145,8 +147,9 @@ class ApiProvider {
   }
 
   Map<String, String>? getApiHeader() {
-    String token = AppPreference.instance.getString(AppString.prefKeyToken);
-
+    LoginModel loginModel = LoginModel.fromJson(jsonDecode(AppPreference.instance.getString(AppString.prefKeyUserLoginData)));
+    // String token = AppPreference.instance.getString(AppString.prefKeyToken);
+    String token = loginModel.idToken ?? "";
     // Initialize the headers map
     Map<String, String> headers = {
       "Content-Type": "application/json",
@@ -159,6 +162,7 @@ class ApiProvider {
       // headers[""] = token;
     }
 
+    print("header is ${headers}");
     return headers.isEmpty ? null : headers;
   }
   // Map<String, String>? getApiHeader() {

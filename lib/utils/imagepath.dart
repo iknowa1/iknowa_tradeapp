@@ -45,4 +45,7 @@ class ImagePath {
   static const String jobDraft = 'assets/images/job_draft.svg';
   static const String jobComplete = 'assets/images/job_complete.svg';
   static const String workStationSuccess = 'assets/images/workstation_success.svg';
+  static const String bottomSheetClose = 'assets/images/bottomsheet_close.svg';
+
+  static const String workFlowAddService = 'assets/images/workflow_add_service.svg';
 }

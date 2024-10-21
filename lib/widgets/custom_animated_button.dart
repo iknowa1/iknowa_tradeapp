@@ -15,6 +15,8 @@ class CustomAnimatedButton extends StatefulWidget {
   final Color? outlineColor; // Optional color for outline button
   final bool isOutline; // Determines if the button is an outline button
   final VoidCallback? onPressed;
+  final bool disableGradient;
+  final double height;
 
   const CustomAnimatedButton({
     super.key,
@@ -29,6 +31,8 @@ class CustomAnimatedButton extends StatefulWidget {
     this.outlineColor,
     this.isOutline = false,
     this.onPressed,
+    this.disableGradient = false,
+    this.height = 55,
   });
 
   @override
@@ -129,10 +133,10 @@ class _CustomAnimatedButtonState extends State<CustomAnimatedButton> with Single
             scale: _scaleAnimation.value,
             child: Container(
               width: double.infinity,
-              height: 55,
+              height: widget.height,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.gradientYellowTopColor, AppColors.gradientYellowBottomColor],
+                gradient: LinearGradient(
+                  colors: widget.disableGradient ? [AppColors.gradientYellowTopColor, AppColors.gradientYellowBottomColor] : [AppColors.textYellow, AppColors.textYellow],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),

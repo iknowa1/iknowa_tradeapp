@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:trade_app/main.dart';
 import 'package:trade_app/screens/dashboard_module/home_screen/controller/home_controller.dart';
+import 'package:trade_app/screens/dashboard_module/home_screen/view/workflow_checklist_view.dart';
 import 'package:trade_app/utils/app_colors.dart';
 import 'package:trade_app/widgets/base_screen.dart';
 import 'package:trade_app/widgets/custom_home_appbar.dart';
@@ -15,6 +17,7 @@ import '../../../../utils/app_fonts.dart';
 import '../../../../utils/imagepath.dart';
 import '../../../../widgets/see_all_text_view.dart';
 import '../../../../widgets/semibold_title_text.dart';
+import 'day_view_widget.dart';
 import 'jobs_near_you_view.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -564,7 +567,25 @@ class HomeScreen extends GetView<HomeController> {
                                         ))
                                   ],
                                 ))),
-                    ],
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                            child: Container(
+                                width: double.maxFinite,
+                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin0, right: Dimen.margin0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                                    width: 2,
+                                  ),
+                                  color: AppColors.backgroundWhite,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: CalendarControllerProvider(
+                                    controller: EventController()..addAll(controller.events), child: Container(height: MediaQuery.of(context).size.height * 0.6, child: DayViewWidget())))),
+                      ],
                     ),
                   ),
                 ),
@@ -609,7 +630,6 @@ class DashLineView extends StatelessWidget {
 }
 
 class SquareContainer extends StatelessWidget {
-
   final String imageUrl;
   final Color color;
   final String number;
@@ -628,36 +648,40 @@ class SquareContainer extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1, // 1:1 ratio to make it square
         child: Container(
-          color: color,
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10),
-                        SvgPicture.asset(
-                          imageUrl,
-                          width: 25,
-                          fit: BoxFit.fitWidth,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          number,
-                          style: AppFonts.regular(20, AppColors.textDarkGray),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "In progress",
-                          style: AppFonts.regular(12, AppColors.textDarkGray),
-                        )
-                      ],
-                    )// Space between containers
-        ),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(3.0),
+            ),
+            // color: color,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            // margin: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                SvgPicture.asset(
+                  imageUrl,
+                  width: 20,
+                  fit: BoxFit.fitWidth,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  number,
+                  style: AppFonts.regular(20, AppColors.textDarkGray),
+                ),
+                const SizedBox(
+                  height: 0,
+                ),
+                Text(
+                  "In progress",
+                  style: AppFonts.regular(12, AppColors.textDarkGray),
+                )
+              ],
+            ) // Space between containers
+            ),
       ),
     );
   }
@@ -674,18 +698,24 @@ class JobOverViewSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05", status: "In progress"),
+            const SizedBox(width: 8),
+            SquareContainer(imageUrl: ImagePath.jobNotStart, color: AppColors.textYellow.withOpacity(0.10), number: "02", status: "Not Started"),
+            const SizedBox(width: 8),
+            SquareContainer(imageUrl: ImagePath.jobEstimate, color: AppColors.backgroundBrown.withOpacity(0.10), number: "01", status: "Not Started"),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
-            SquareContainer(imageUrl: ImagePath.jobProgress, color: AppColors.textBlue.withOpacity(0.10), number: "05",status: "In progress"),
+            SquareContainer(imageUrl: ImagePath.jobReject, color: AppColors.backgroundRed.withOpacity(0.10), number: "01", status: "Rejected"),
+            const SizedBox(width: 8),
+            SquareContainer(imageUrl: ImagePath.jobDraft, color: AppColors.backgroundPurple.withOpacity(0.10), number: "03", status: "Draft Jobs"),
+            const SizedBox(width: 8),
+            SquareContainer(imageUrl: ImagePath.jobComplete, color: AppColors.backgroundGreen.withOpacity(0.10), number: "12", status: "Completed Jobs"),
           ],
         ),
       ],
@@ -1021,397 +1051,402 @@ class WorkStationFlowView extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          ClipOval(
-                            child: Container(
-                              color: AppColors.textDarkGray,
-                              width: 20,
-                              height: 20,
-                              child: Text(
-                                "01",
-                                textAlign: TextAlign.center,
-                                style: AppFonts.semiBold(12, AppColors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Add Business Address",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Access document storage, create calendar events & invite others.",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: DashLineView(
-                          dashColor: AppColors.dashLineColor,
-                          fillRate: 0.7,
-                        ),
-                      ),
-                      // 2nd option
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          ClipOval(
-                            child: Container(
-                              color: AppColors.textDarkGray,
-                              width: 20,
-                              height: 20,
-                              child: Text(
-                                "02",
-                                textAlign: TextAlign.center,
-                                style: AppFonts.semiBold(12, AppColors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Add Business Address",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Access document storage, create calendar events & invite others.",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: DashLineView(
-                          dashColor: AppColors.dashLineColor,
-                          fillRate: 0.7,
-                        ),
-                      ),
-                      // 3rd option
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          ClipOval(
-                            child: Container(
-                              color: AppColors.textDarkGray,
-                              width: 20,
-                              height: 20,
-                              child: Text(
-                                "03",
-                                textAlign: TextAlign.center,
-                                style: AppFonts.semiBold(12, AppColors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Add Business Address",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Access document storage, create calendar events & invite others.",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: DashLineView(
-                          dashColor: AppColors.dashLineColor,
-                          fillRate: 0.7,
-                        ),
-                      ),
-                      // 4th option
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          ClipOval(
-                            child: Container(
-                              color: AppColors.textDarkGray,
-                              width: 20,
-                              height: 20,
-                              child: Text(
-                                "04",
-                                textAlign: TextAlign.center,
-                                style: AppFonts.semiBold(12, AppColors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Add Business Address",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Access document storage, create calendar events & invite others.",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: DashLineView(
-                          dashColor: AppColors.dashLineColor,
-                          fillRate: 0.7,
-                        ),
-                      ),
-                      // 5th option
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          ClipOval(
-                            child: Container(
-                              color: AppColors.textDarkGray,
-                              width: 20,
-                              height: 20,
-                              child: Text(
-                                "05",
-                                textAlign: TextAlign.center,
-                                style: AppFonts.semiBold(12, AppColors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Add Business Address",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Access document storage, create calendar events & invite others.",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
+                      WorkflowCheckListView(),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     ClipOval(
+                      //       child: Container(
+                      //         color: AppColors.textDarkGray,
+                      //         width: 20,
+                      //         height: 20,
+                      //         child: Text(
+                      //           "01",
+                      //           textAlign: TextAlign.center,
+                      //           style: AppFonts.semiBold(12, AppColors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text.rich(
+                      //       TextSpan(
+                      //         children: [
+                      //           TextSpan(
+                      //             text: "Add Business Address",
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 // Navigator.pushNamed(context, AppRoutes.);
+                      //               },
+                      //             style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       textAlign: TextAlign.center,
+                      //     )
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 40,
+                      //     ),
+                      //     Expanded(
+                      //       child: Text.rich(
+                      //         maxLines: 3,
+                      //         overflow: TextOverflow.fade,
+                      //         softWrap: true,
+                      //         TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: "Access document storage, create calendar events & invite others.",
+                      //               recognizer: TapGestureRecognizer()
+                      //                 ..onTap = () {
+                      //                   // Navigator.pushNamed(context, AppRoutes.);
+                      //                 },
+                      //               style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         textAlign: TextAlign.left,
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: DashLineView(
+                      //     dashColor: AppColors.dashLineColor,
+                      //     fillRate: 0.7,
+                      //   ),
+                      // ),
+                      // // 2nd option
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     ClipOval(
+                      //       child: Container(
+                      //         color: AppColors.textDarkGray,
+                      //         width: 20,
+                      //         height: 20,
+                      //         child: Text(
+                      //           "02",
+                      //           textAlign: TextAlign.center,
+                      //           style: AppFonts.semiBold(12, AppColors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text.rich(
+                      //       TextSpan(
+                      //         children: [
+                      //           TextSpan(
+                      //             text: "Add Business Address",
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 // Navigator.pushNamed(context, AppRoutes.);
+                      //               },
+                      //             style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       textAlign: TextAlign.center,
+                      //     )
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 40,
+                      //     ),
+                      //     Expanded(
+                      //       child: Text.rich(
+                      //         maxLines: 3,
+                      //         overflow: TextOverflow.fade,
+                      //         softWrap: true,
+                      //         TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: "Access document storage, create calendar events & invite others.",
+                      //               recognizer: TapGestureRecognizer()
+                      //                 ..onTap = () {
+                      //                   // Navigator.pushNamed(context, AppRoutes.);
+                      //                 },
+                      //               style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         textAlign: TextAlign.left,
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: DashLineView(
+                      //     dashColor: AppColors.dashLineColor,
+                      //     fillRate: 0.7,
+                      //   ),
+                      // ),
+                      // // 3rd option
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     ClipOval(
+                      //       child: Container(
+                      //         color: AppColors.textDarkGray,
+                      //         width: 20,
+                      //         height: 20,
+                      //         child: Text(
+                      //           "03",
+                      //           textAlign: TextAlign.center,
+                      //           style: AppFonts.semiBold(12, AppColors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text.rich(
+                      //       TextSpan(
+                      //         children: [
+                      //           TextSpan(
+                      //             text: "Add Business Address",
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 // Navigator.pushNamed(context, AppRoutes.);
+                      //               },
+                      //             style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       textAlign: TextAlign.center,
+                      //     )
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 40,
+                      //     ),
+                      //     Expanded(
+                      //       child: Text.rich(
+                      //         maxLines: 3,
+                      //         overflow: TextOverflow.fade,
+                      //         softWrap: true,
+                      //         TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: "Access document storage, create calendar events & invite others.",
+                      //               recognizer: TapGestureRecognizer()
+                      //                 ..onTap = () {
+                      //                   // Navigator.pushNamed(context, AppRoutes.);
+                      //                 },
+                      //               style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         textAlign: TextAlign.left,
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: DashLineView(
+                      //     dashColor: AppColors.dashLineColor,
+                      //     fillRate: 0.7,
+                      //   ),
+                      // ),
+                      // // 4th option
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     ClipOval(
+                      //       child: Container(
+                      //         color: AppColors.textDarkGray,
+                      //         width: 20,
+                      //         height: 20,
+                      //         child: Text(
+                      //           "04",
+                      //           textAlign: TextAlign.center,
+                      //           style: AppFonts.semiBold(12, AppColors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text.rich(
+                      //       TextSpan(
+                      //         children: [
+                      //           TextSpan(
+                      //             text: "Add Business Address",
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 // Navigator.pushNamed(context, AppRoutes.);
+                      //               },
+                      //             style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       textAlign: TextAlign.center,
+                      //     )
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 40,
+                      //     ),
+                      //     Expanded(
+                      //       child: Text.rich(
+                      //         maxLines: 3,
+                      //         overflow: TextOverflow.fade,
+                      //         softWrap: true,
+                      //         TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: "Access document storage, create calendar events & invite others.",
+                      //               recognizer: TapGestureRecognizer()
+                      //                 ..onTap = () {
+                      //                   // Navigator.pushNamed(context, AppRoutes.);
+                      //                 },
+                      //               style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         textAlign: TextAlign.left,
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 5,
+                      //     )
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: DashLineView(
+                      //     dashColor: AppColors.dashLineColor,
+                      //     fillRate: 0.7,
+                      //   ),
+                      // ),
+                      // // 5th option
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     ClipOval(
+                      //       child: Container(
+                      //         color: AppColors.textDarkGray,
+                      //         width: 20,
+                      //         height: 20,
+                      //         child: Text(
+                      //           "05",
+                      //           textAlign: TextAlign.center,
+                      //           style: AppFonts.semiBold(12, AppColors.white),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text.rich(
+                      //       TextSpan(
+                      //         children: [
+                      //           TextSpan(
+                      //             text: "Add Business Address",
+                      //             recognizer: TapGestureRecognizer()
+                      //               ..onTap = () {
+                      //                 // Navigator.pushNamed(context, AppRoutes.);
+                      //               },
+                      //             style: const TextStyle(fontSize: 15, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       textAlign: TextAlign.center,
+                      //     )
+                      //   ],
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     SizedBox(
+                      //       width: 40,
+                      //     ),
+                      //     Expanded(
+                      //       child: Text.rich(
+                      //         maxLines: 3,
+                      //         overflow: TextOverflow.fade,
+                      //         softWrap: true,
+                      //         TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: "Access document storage, create calendar events & invite others.",
+                      //               recognizer: TapGestureRecognizer()
+                      //                 ..onTap = () {
+                      //                   // Navigator.pushNamed(context, AppRoutes.);
+                      //                 },
+                      //               style: const TextStyle(fontSize: 13, color: AppColors.textDarkGray, fontFamily: "Mulish", fontWeight: FontWeight.w300, decoration: TextDecoration.lineThrough),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         textAlign: TextAlign.left,
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 5,
+                      //     )
+                      //   ],
+                      // ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -1423,7 +1458,7 @@ class WorkStationFlowView extends StatelessWidget {
                 ),
                 Container(
                   width: double.maxFinite,
-                  height: 50,
+                  height: 45,
                   decoration: BoxDecoration(
                     color: AppColors.backgroundYellow,
                     borderRadius: BorderRadius.circular(8), //
@@ -1434,9 +1469,9 @@ class WorkStationFlowView extends StatelessWidget {
                         height: 13,
                       ),
                       Text(
-                        "Submit workstation for verification",
+                        "SUBMIT WORKSTATION FOR VERIFICATION",
                         textAlign: TextAlign.center,
-                        style: AppFonts.bold(17, AppColors.white),
+                        style: AppFonts.bold(13, AppColors.white),
                       ),
                     ],
                   ),
@@ -1447,4 +1482,29 @@ class WorkStationFlowView extends StatelessWidget {
               ],
             )));
   }
+}
+
+class ResponsiveWidget extends StatelessWidget {
+  final double? width;
+  final double breakPoint;
+
+  final Widget mobileWidget;
+
+  const ResponsiveWidget({
+    super.key,
+    this.width,
+    this.breakPoint = BreakPoints.web,
+    required this.mobileWidget,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final width = this.width ?? MediaQuery.of(context).size.width;
+
+    return mobileWidget;
+  }
+}
+
+class BreakPoints {
+  static const double web = 800;
 }
