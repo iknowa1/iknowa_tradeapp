@@ -3,4 +3,6 @@ class UrlProvider {
   static String baseUrl = "https://api.barrythebonsai.com/";
 
   static String encryptionKey = "xk60KcQWdAQfA8YwRR3JVPxaH1Iyyu2E";
+
+  static String imageUrl = "https://storage.googleapis.com/idgc-b10/";
 }

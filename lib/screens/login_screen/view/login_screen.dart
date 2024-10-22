@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toastification/toastification.dart';
+import 'package:trade_app/screens/login_screen/model/selected_account_model.dart';
 import 'package:trade_app/utils/imagepath.dart';
 import '../../../core/common/app_preferences.dart';
 import '../../../route/app_pages.dart';
@@ -120,14 +121,26 @@ class LoginScreen extends GetView<LoginController> {
                           onPressed: () async {
                             if (controller.loginValidation()) {
                               LoginModel response = await controller.authLoginUser();
-                              if (response.user?.id != null) {
-                                await AppPreference.instance.setString(AppString.prefKeyUserLoginData, json.encode(response.toJson()));
-                                AppPreference.instance.setString(response.idToken ?? "", AppString.prefKeyToken);
-                                CustomToastification().showToast("Login success", type: ToastificationType.success);
 
-                                if (response.user!.verifiedEmail == false) {
+                              if (response.user?.id != null) {
+                                if (response.user?.role?.id == 2) {
+                                  SelectedAccountModel selectAccount =
+                                      await controller.selectAccount(controller.emailController.text, response.user!.role!.id.toString(), response.user!.id.toString());
+                                  print("SelectedAccountModel response ${selectAccount}");
+
+                                  if (response.user!.verifiedEmail == false) {
+                                  } else {
+                                    Get.toNamed(Routes.setbiometricPascode);
+                                  }
                                 } else {
-                                  Get.toNamed(Routes.setbiometricPascode);
+                                  await AppPreference.instance.setString(AppString.prefKeyUserLoginData, json.encode(response.toJson()));
+                                  AppPreference.instance.setString(response.idToken ?? "", AppString.prefKeyToken);
+                                  CustomToastification().showToast("Login success", type: ToastificationType.success);
+
+                                  if (response.user!.verifiedEmail == false) {
+                                  } else {
+                                    Get.toNamed(Routes.setbiometricPascode);
+                                  }
                                 }
                               }
                             }

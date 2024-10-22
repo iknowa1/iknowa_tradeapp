@@ -32,22 +32,21 @@ class DayViewWidget extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      state?.currentState?.previousPage();
+                      NavigatorKey.instance.calendarKey.currentState?.previousPage();
                     },
                     child: Icon(
                       Icons.arrow_back_ios,
                     ),
                   ),
                   GestureDetector(
-                      onTap: () {
-                        // widget.onHeaderTitleTap!(date);
-                        print("state is ${state?.currentState}");
-                        state?.currentState?.widget.onHeaderTitleTap!(DateTime.now());
+                      onTap: () async {
+                        // Open date picker when the date text is tapped
+                        await _selectDate(context, NavigatorKey.instance.calendarKey.currentState!.currentDate);
                       },
-                      child: Text("Wed, 24 Sept 2024")),
+                      child: Text(_formatCustomDate(NavigatorKey.instance.calendarKey.currentState!.currentDate))),
                   GestureDetector(
                     onTap: () {
-                      state?.currentState?.nextPage();
+                      NavigatorKey.instance.calendarKey.currentState?.nextPage();
                     },
                     child: Icon(
                       Icons.arrow_forward_ios,
@@ -225,5 +224,29 @@ class DayViewWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _selectDate(BuildContext context, DateTime currentDate) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: currentDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != currentDate) {
+      NavigatorKey.instance.calendarKey.currentState?.jumpToDate(picked);
+    }
+  }
+
+  String _formatCustomDate(DateTime date) {
+    // Arrays for day and month names
+    final days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+    // Format day with leading zero
+    final day = date.day.toString().padLeft(2, '0');
+
+    return '${days[date.weekday - 1]}, $day ${months[date.month - 1]} ${date.year}';
   }
 }

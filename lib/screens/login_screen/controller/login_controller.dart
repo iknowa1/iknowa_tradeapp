@@ -5,6 +5,7 @@ import 'package:toastification/toastification.dart';
 import 'package:trade_app/core/common/common_service.dart';
 import 'package:trade_app/core/common/url_provider.dart';
 import 'package:trade_app/screens/Registration_module/otp_registration_screen/repository/otp_registration_repository.dart';
+import 'package:trade_app/screens/login_screen/model/selected_account_model.dart';
 import 'package:trade_app/screens/login_screen/repository/login_repository.dart';
 import 'package:trade_app/utils/validation_string.dart';
 import 'package:trade_app/widgets/custom_toastification.dart';
@@ -24,8 +25,10 @@ class LoginController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    emailController.text = "kishan.suthar@esparkbizmail.com";
-    passwordController.text = "Kishansuthar123@";
+    emailController.text = "ks@yopmail.com";
+    passwordController.text = "abc@A1234";
+    // emailController.text = "kishan.suthar@esparkbizmail.com";
+    // passwordController.text = "Kishansuthar123@";
   }
 
   Future<bool> sendEmailOTP({
@@ -34,6 +37,20 @@ class LoginController extends GetxController {
     var response = await ApiProvider.instance.callStringPost("auth/verify/resend", params: {"email": email});
     print("internal response $response");
     return response;
+  }
+
+  Future<SelectedAccountModel> selectAccount(String email, String roleId, String userId) async {
+    print("call selectAccount");
+    try {
+      SelectedAccountModel selectedAccountModel = await _loginRepository.selectAccount(email: email, roleId: roleId, userId: userId);
+      isLoading.value = false;
+      print("response is ${selectedAccountModel.toJson()} ");
+      return selectedAccountModel;
+    } catch (error) {
+      isLoading.value = false;
+      print("login catch error is $error");
+      return SelectedAccountModel.fromJson({});
+    }
   }
 
   Future<LoginModel> authLoginUser() async {

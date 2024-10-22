@@ -47,7 +47,8 @@ class ApiProvider {
       print(UrlProvider.baseUrl + url);
     }
     try {
-      var response = await dio.post(UrlProvider.baseUrl + url, data: params, options: Options(headers: getApiHeader())).timeout(const Duration(seconds: 30));
+      var response = await dio.post(UrlProvider.baseUrl + url, data: jsonEncode(params), options: Options(headers: getApiHeader())).timeout(const Duration(seconds: 30));
+      print("API response is $response");
       return getResponse(response.data);
     } on TimeoutException {
       throw ValidationString.validationRequestTimeout;
@@ -125,7 +126,17 @@ class ApiProvider {
       print(UrlProvider.baseUrl + url);
     }
     try {
+      print("-------------------------------");
+      print("queryParameters: $queryParameters");
+      print("url is : $url");
+      print("-------------------------------");
       var response = await dio.get(UrlProvider.baseUrl + url, queryParameters: queryParameters, options: Options(headers: getApiHeader())).timeout(const Duration(seconds: 30));
+      print("-------------------------------");
+      print("API response $response");
+      print("-------------------------------");
+      if (response.data is List) {
+        return {"data": response.data};
+      }
       return getResponse(response.data);
     } on TimeoutException {
       throw ValidationString.validationRequestTimeout;
@@ -147,13 +158,20 @@ class ApiProvider {
   }
 
   Map<String, String>? getApiHeader() {
-    LoginModel loginModel = LoginModel.fromJson(jsonDecode(AppPreference.instance.getString(AppString.prefKeyUserLoginData)));
+    print("getApiHeader");
+    String token = "";
+    String loginKey = AppPreference.instance.getString(AppString.prefKeyUserLoginData);
+    if (loginKey.isNotEmpty) {
+      LoginModel loginModel = LoginModel.fromJson(jsonDecode(loginKey));
+      token = loginModel.idToken ?? "";
+    }
+
     // String token = AppPreference.instance.getString(AppString.prefKeyToken);
-    String token = loginModel.idToken ?? "";
+
     // Initialize the headers map
     Map<String, String> headers = {
-      "Content-Type": "application/json",
-      // "accept": "application/json",
+      // "Content-Type": "application/json",
+      "accept": "application/json",
     };
 
     // Add x-session header if token exists
