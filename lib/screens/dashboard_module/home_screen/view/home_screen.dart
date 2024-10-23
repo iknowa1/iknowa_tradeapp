@@ -17,6 +17,7 @@ import 'package:trade_app/widgets/custom_home_appbar.dart';
 import '../../../../utils/app_diamentions.dart';
 import '../../../../utils/app_fonts.dart';
 import '../../../../utils/imagepath.dart';
+import '../../../../widgets/DashLineView.dart';
 import '../../../../widgets/see_all_text_view.dart';
 import '../../../../widgets/semibold_title_text.dart';
 import 'day_view_widget.dart';
@@ -472,12 +473,27 @@ class HomeScreen extends GetView<HomeController> {
                                                               height: 50,
                                                               fit: BoxFit.fill,
                                                             )
-                                                          : Image.asset(
-                                                              ImagePath.user1,
+                                                          : Container(
                                                               width: 50,
                                                               height: 50,
-                                                              fit: BoxFit.fill,
-                                                            ),
+                                                              color: Colors.blue,
+                                                              child: Obx(() {
+                                                                return Center(
+                                                                  child: Text(
+                                                                      style: AppFonts.medium(15.0, AppColors.textWhite),
+                                                                      controller.workStationTeamMemberList[index].userWorkstation?.user?.firstName != null
+                                                                          ? "${controller.workStationTeamMemberList[index].userWorkstation?.user!.firstName?[0] ?? ""}${controller.workStationTeamMemberList[index].userWorkstation?.user!.lastName?[0] ?? ""}"
+                                                                          : controller.workStationTeamMemberList[index].userWorkstation?.name?[0] ?? ""),
+                                                                );
+                                                              }),
+                                                            )
+                                                      // Image.asset(
+                                                      //         ImagePath.user1,
+                                                      //         width: 50,
+                                                      //         height: 50,
+                                                      //         fit: BoxFit.fill,
+                                                      //       )
+                                                      ,
                                                     ),
                                                     Positioned(
                                                         left: 35,
@@ -634,8 +650,18 @@ class HomeScreen extends GetView<HomeController> {
                                   color: AppColors.backgroundWhite,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                child: CalendarControllerProvider(
-                                    controller: EventController()..addAll(controller.events), child: Container(height: MediaQuery.of(context).size.height * 0.6, child: DayViewWidget())))),
+                                child: Obx(() {
+                                  return CalendarControllerProvider(
+                                      controller: EventController()..addAll(controller.events),
+                                      child: Container(
+                                          height: MediaQuery.of(context).size.height * 0.6,
+                                          child: DayViewWidget(
+                                            onPressed: (dateValue) {
+                                              print("Home screen date is $dateValue");
+                                              controller.getCalendarEventByDate(dateValue);
+                                            },
+                                          )));
+                                }))),
                       ],
                     ),
                   ),
@@ -644,39 +670,6 @@ class HomeScreen extends GetView<HomeController> {
             ],
           ),
         ));
-  }
-}
-
-class DashLineView extends StatelessWidget {
-  final double dashHeight;
-  final double dashWith;
-  final Color dashColor;
-  final double fillRate; // [0, 1] totalDashSpace/totalSpace
-  final Axis direction;
-
-  const DashLineView({super.key, this.dashHeight = 1, this.dashWith = 8, this.dashColor = Colors.black, this.fillRate = 0.5, this.direction = Axis.horizontal});
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        final boxSize = direction == Axis.horizontal ? constraints.constrainWidth() : constraints.constrainHeight();
-        final dCount = (boxSize * fillRate / dashWith).floor();
-        return Flex(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          direction: direction,
-          children: List.generate(dCount, (_) {
-            return SizedBox(
-              width: direction == Axis.horizontal ? dashWith : dashHeight,
-              height: direction == Axis.horizontal ? dashHeight : dashWith,
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: dashColor),
-              ),
-            );
-          }),
-        );
-      },
-    );
   }
 }
 
@@ -1252,7 +1245,7 @@ class WorkStationFlowView extends StatelessWidget {
                                         color: homeController.workStationFlowStep2.value ? AppColors.backgroundGreen : AppColors.textBlue,
                                         fontFamily: "Mulish",
                                         fontWeight: FontWeight.w600,
-                                        decoration: homeController.workStationFlowStep1.value ? TextDecoration.lineThrough : TextDecoration.none),
+                                        decoration: homeController.workStationFlowStep2.value ? TextDecoration.lineThrough : TextDecoration.underline),
                                   ),
                                 ],
                               ),
@@ -1332,21 +1325,28 @@ class WorkStationFlowView extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Complete ID Verification (KYC)",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 13, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                          Obx(() {
+                            return Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Complete ID Verification (KYC)",
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // Navigator.pushNamed(context, AppRoutes.);
+                                      },
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: homeController.workStationFlowStep3.value ? AppColors.backgroundGreen : AppColors.textBlue,
+                                        fontFamily: "Mulish",
+                                        fontWeight: FontWeight.w600,
+                                        decoration: homeController.workStationFlowStep3.value ? TextDecoration.lineThrough : TextDecoration.underline),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+                          })
                         ],
                       ),
                       Row(
@@ -1355,29 +1355,31 @@ class WorkStationFlowView extends StatelessWidget {
                             width: 40,
                           ),
                           Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Increase clients trust & win more Jobs",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.textDarkGray,
-                                        fontFamily: "Mulish",
-                                        fontWeight: FontWeight.w300,
-                                        decoration: homeController.workStationFlowStep3.value ? TextDecoration.lineThrough : TextDecoration.none),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                            child: Obx(() {
+                              return Text.rich(
+                                maxLines: 3,
+                                overflow: TextOverflow.fade,
+                                softWrap: true,
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Increase clients trust & win more Jobs",
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          // Navigator.pushNamed(context, AppRoutes.);
+                                        },
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.textDarkGray,
+                                          fontFamily: "Mulish",
+                                          fontWeight: FontWeight.w300,
+                                          decoration: homeController.workStationFlowStep3.value ? TextDecoration.lineThrough : TextDecoration.none),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.left,
+                              );
+                            }),
                           ),
                           SizedBox(
                             width: 5,
@@ -1418,21 +1420,28 @@ class WorkStationFlowView extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Complete Your Trade Passport",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 13, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                          Obx(() {
+                            return Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Complete Your Trade Passport",
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // Navigator.pushNamed(context, AppRoutes.);
+                                      },
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: homeController.workStationFlowStep4.value ? AppColors.backgroundGreen : AppColors.textBlue,
+                                        fontFamily: "Mulish",
+                                        fontWeight: FontWeight.w600,
+                                        decoration: homeController.workStationFlowStep4.value ? TextDecoration.lineThrough : TextDecoration.underline),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+                          })
                         ],
                       ),
                       Row(
@@ -1441,29 +1450,31 @@ class WorkStationFlowView extends StatelessWidget {
                             width: 40,
                           ),
                           Expanded(
-                            child: Text.rich(
-                              maxLines: 3,
-                              overflow: TextOverflow.fade,
-                              softWrap: true,
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Add Services, Certificates, Insurances & other details",
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        // Navigator.pushNamed(context, AppRoutes.);
-                                      },
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.textDarkGray,
-                                        fontFamily: "Mulish",
-                                        fontWeight: FontWeight.w300,
-                                        decoration: homeController.workStationFlowStep4.value ? TextDecoration.lineThrough : TextDecoration.none),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
+                            child: Obx(() {
+                              return Text.rich(
+                                maxLines: 3,
+                                overflow: TextOverflow.fade,
+                                softWrap: true,
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Add Services, Certificates, Insurances & other details",
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          // Navigator.pushNamed(context, AppRoutes.);
+                                        },
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.textDarkGray,
+                                          fontFamily: "Mulish",
+                                          fontWeight: FontWeight.w300,
+                                          decoration: homeController.workStationFlowStep4.value ? TextDecoration.lineThrough : TextDecoration.none),
+                                    ),
+                                  ],
+                                ),
+                                textAlign: TextAlign.left,
+                              );
+                            }),
                           ),
                           SizedBox(
                             width: 5,
@@ -1504,22 +1515,29 @@ class WorkStationFlowView extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text.rich(
-                            maxLines: 2,
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Submit Your Workstation for Verification",
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      // Navigator.pushNamed(context, AppRoutes.);
-                                    },
-                                  style: const TextStyle(fontSize: 13, color: AppColors.backgroundGreen, fontFamily: "Mulish", fontWeight: FontWeight.w600, decoration: TextDecoration.lineThrough),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                          Obx(() {
+                            return Text.rich(
+                              maxLines: 2,
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Submit Your Workstation for Verification",
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        // Navigator.pushNamed(context, AppRoutes.);
+                                      },
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: homeController.workStationFlowStep5.value ? AppColors.backgroundGreen : AppColors.textBlue,
+                                        fontFamily: "Mulish",
+                                        fontWeight: FontWeight.w600,
+                                        decoration: homeController.workStationFlowStep5.value ? TextDecoration.lineThrough : TextDecoration.underline),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            );
+                          })
                         ],
                       ),
                       Row(

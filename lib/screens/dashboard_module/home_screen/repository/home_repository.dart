@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:trade_app/screens/dashboard_module/home_screen/model/UserDetailModel.dart';
 
 import '../../../../data/provider/api_provider.dart';
+import '../model/CalendarEventListModel.dart';
 import '../model/ProjectEstimateActiveListModel.dart';
 import '../model/ProjectEstimateDraftListModel.dart';
 import '../model/UserWorkStationModel.dart';
@@ -87,12 +88,12 @@ class HomeRepository {
     return UserDetailModel.fromJson(response);
   }
 
-  Future<UserDetailModel> getCalendarDataByDate({
+  Future<List<CalendarEventListModel>> getCalendarDataByDate({
     required String userId,
     required String date,
   }) async {
     var response = await ApiProvider.instance.callGet("trader/calendars", queryParameters: {'userId': userId, 'startDate': date, 'endDate': date});
     print("getCalendarDataByDate API response ${response}");
-    return UserDetailModel.fromJson(response);
+    return List.from(response["data"] ?? []).map((e) => CalendarEventListModel.fromJson(e)).toList();
   }
 }

@@ -48,4 +48,35 @@ class ImagePath {
   static const String bottomSheetClose = 'assets/images/bottomsheet_close.svg';
 
   static const String workFlowAddService = 'assets/images/workflow_add_service.svg';
+  static const String infoImage = 'assets/images/info_img.svg';
+
+  static const String tradeOverview = 'assets/images/trade_overview.svg';
+  static const String tradeService = 'assets/images/trade_service.svg';
+  static const String tradeCertificate = 'assets/images/trade_certificate.svg';
+  static const String tradeInsurance = 'assets/images/trade_insurance.svg';
+  static const String tradeJob = 'assets/images/trade_job.svg';
+  static const String tradeReview = 'assets/images/trade_review.svg';
+  static const String tradeGallery = 'assets/images/trade_gallery.svg';
+
+  static const String ltdCompany = 'assets/images/ltd_company.svg';
+  static const String generatePassport = 'assets/images/generate_passport.svg';
+  static const String locationBlack = 'assets/images/location_black.svg';
+  static const String pendingInsurance = 'assets/images/pending_insurance.svg';
+
+  static const String deleteInsurance = 'assets/images/delete_insurance.svg';
+  static const String editInsurance = 'assets/images/edit_insurance.svg';
+  static const String work = 'assets/images/work.svg';
+  static const String pdf = 'assets/images/pdf.svg';
+
+  static const String serviceInfo = 'assets/images/service_info.svg';
+  static const String serviceRight = 'assets/images/service_right.svg';
+  static const String serviceElectrician = 'assets/images/service_electrician.svg';
+  static const String serviceCarpenter = 'assets/images/service_carpenter.svg';
+
+  static const String reviewImage1 = 'assets/images/review_image1.png';
+  static const String reviewImage2 = 'assets/images/review_image2.png';
+  static const String reviewImage3 = 'assets/images/review_image3.png';
+
+  static const String certificateIcon = 'assets/images/certificate_icon.svg';
+  // static const String reviewLocation = 'assets/images/review_location.svg';
 }

@@ -48,10 +48,10 @@ class DashboardScreen extends GetView<DashboardController> {
               }),
             ),
             Container(
-              color: Color.fromRGBO(12, 15, 74, 1),
+              color: const Color.fromRGBO(12, 15, 74, 1),
               height: 90 + MediaQuery.of(context).padding.bottom,
               child: Padding(
-                padding: EdgeInsets.only(left: 24, right: 24, top: 16),
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 16),
                 child: Obx(() {
                   return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

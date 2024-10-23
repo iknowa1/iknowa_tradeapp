@@ -6,12 +6,16 @@ import 'package:trade_app/utils/app_fonts.dart';
 import '../../../../data/provider/key_provider/key_provider.dart';
 import 'event_details_page.dart';
 
+typedef StringCallback = void Function(String);
+
 class DayViewWidget extends StatelessWidget {
+  final StringCallback onPressed;
   final GlobalKey<DayViewState>? state;
   final double? width;
 
   const DayViewWidget({
     super.key,
+    required this.onPressed,
     this.state,
     this.width,
   });
@@ -19,6 +23,12 @@ class DayViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DayView(
+      onPageChange: (date, index) {
+        String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+        print("date is $date");
+        print("index is $index");
+        onPressed(formattedDate);
+      },
       initialDay: DateTime.now(),
       dayTitleBuilder: (date) {
         return Padding(

@@ -32,6 +32,8 @@ class AppColors {
   static const Color backgroundLightBlue = Color(0xFFF1F5FF);
   static const Color backgroundRed = Color(0xFFFF3636);
   static const Color backgroundSlimLightBlue = Color(0xFFF6F8FD);
+  static const Color backgroundUserProfile = Color(0xFFC5C5D4);
+  static const Color userProfileColor = Color(0xFFC2C6D0);
 
   static const Color disableButtonGrayText = Color(0xFF000000);
   static const Color dashLineColor = Color(0xFF8687A5);
@@ -40,6 +42,9 @@ class AppColors {
   static const Color backgroundPurple = Color(0xFF7467B7);
   static const Color backgroundGreen = Color(0xFF24BD63);
   static const Color backgroundLightGreen = Color(0xFFD9EFD9);
+  static const Color backgroundLightYellow = Color(0xFFFDDEC7);
+  static const Color backgroundBlue = Color(0xFFC5D2F2);
+  static const Color backgroundDarkYellow = Color(0xFFF0930D);
   //
   static const Color textMildAway = Color(0xFF8587A4);
   // Input text field color
@@ -48,4 +53,6 @@ class AppColors {
   static const Color colorInputBackground = Color(0xFFF9F9F9);
   static const Color colorInputGrayBorder = Color(0xFFE7EBF7);
   static const Color colorInputLightGrayBorder = Color(0xFFE2E8F0);
+
+  static const Color selectedTabBlue = Color(0xFF4F55F0);
 }
