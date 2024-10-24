@@ -6,8 +6,8 @@ import 'package:trade_app/screens/dashboard_module/trade_passport_screen/model/r
 import 'package:trade_app/utils/app_fonts.dart';
 import 'package:trade_app/utils/imagepath.dart';
 
-import '../../../../utils/app_colors.dart';
-import '../../../../widgets/DashLineView.dart';
+import '../../../../../utils/app_colors.dart';
+import '../../../../../widgets/DashLineView.dart';
 
 class ReviewScreen extends StatelessWidget {
   final List<ReviewModel>? reviewList;

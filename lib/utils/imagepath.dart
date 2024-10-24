@@ -78,5 +78,15 @@ class ImagePath {
   static const String reviewImage3 = 'assets/images/review_image3.png';
 
   static const String certificateIcon = 'assets/images/certificate_icon.svg';
+  static const String fileImage = 'assets/images/file_img.svg';
+  static const String threeDot = 'assets/images/three_dot.svg';
+  static const String uploadDoc = 'assets/images/upload_doc.svg';
+  static const String expired = 'assets/images/expired.svg';
+  static const String delete = 'assets/images/delete.svg';
   // static const String reviewLocation = 'assets/images/review_location.svg';
+  static const String addInsuranceCalendar = 'assets/images/add_insurance_calendar.svg';
+  static const String addInsuranceDownArrow = 'assets/images/add_insurance_down_arrow.svg';
+  static const String addInsuranceUpload = 'assets/images/add_insurance_upload.svg';
+
+  static const String addDescription = 'assets/images/add_description.svg';
 }

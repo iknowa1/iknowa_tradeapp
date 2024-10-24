@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:trade_app/screens/dashboard_module/trade_passport_screen/model/certification_model.dart';
 import 'package:trade_app/screens/dashboard_module/trade_passport_screen/widget/card_component.dart';
 
-import '../../../../utils/app_colors.dart';
+import '../../../../../route/app_pages.dart';
+import '../../../../../utils/app_colors.dart';
 
 class CertificationScreen extends StatelessWidget {
   final List<CertificationModel>? certificateList;
@@ -32,18 +35,23 @@ class CertificationScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-              bottom: 0,
-              right: 30,
-              child: ClipOval(
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  color: AppColors.textYellow,
-                  child: const Center(
-                    child: Icon(
-                      size: 40,
-                      color: AppColors.backgroundWhite,
-                      Icons.add,
+              bottom: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.addCertificateScreen);
+                },
+                child: ClipOval(
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    color: AppColors.textYellow,
+                    child: const Center(
+                      child: Icon(
+                        size: 40,
+                        color: AppColors.backgroundWhite,
+                        Icons.add,
+                      ),
                     ),
                   ),
                 ),

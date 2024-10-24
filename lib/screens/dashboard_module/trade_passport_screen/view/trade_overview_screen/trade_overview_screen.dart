@@ -6,20 +6,22 @@ import 'package:flutter_svg/svg.dart';
 import 'package:trade_app/utils/app_diamentions.dart';
 import 'package:trade_app/utils/app_fonts.dart';
 import 'package:trade_app/utils/imagepath.dart';
+import '../../../../../utils/app_colors.dart';
+import '../../../../../widgets/DashLineView.dart';
+import '../../../../../widgets/empty_gride_card.dart';
 
-import '../../../../utils/app_colors.dart';
-import '../../../../widgets/DashLineView.dart';
-
-class TradeNetworkFindJobView extends StatelessWidget {
+class TradeOverviewScreen extends StatelessWidget {
   Color? screenColor;
 
-  TradeNetworkFindJobView({super.key, required this.screenColor});
+  bool isDescription = false;
+
+  TradeOverviewScreen({super.key, required this.screenColor});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: screenColor,
-      body: SingleChildScrollView(
+    return Container(
+      color: screenColor,
+      child: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -74,22 +76,6 @@ class TradeNetworkFindJobView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Column(
-                    //   children: [
-                    //     Expanded(
-                    //       child: Text(
-                    //         "Next Action for workstation setup:",
-                    //         style: AppFonts.medium(13, AppColors.textWhite),
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       child: Text(
-                    //         "Next Action for workstation setup:",
-                    //         style: AppFonts.bold(13, AppColors.textWhite),
-                    //       ),
-                    //     )
-                    //   ],
-                    // )
                   ],
                 ),
               ),
@@ -1123,44 +1109,55 @@ class TradeNetworkFindJobView extends StatelessWidget {
                         dashColor: AppColors.dashLineColor,
                         fillRate: 0.7,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        """
+                      if (isDescription) ...[
+                        Center(
+                          child: EmptyGridCard(
+                            title: "Your Description will appear here",
+                            addText: "Add Description",
+                            imgIcon: ImagePath.addDescription,
+                            onAddTextPress: () {},
+                          ),
+                        )
+                      ] else if (!isDescription) ...[
+                        const SizedBox(height: 16),
+                        Text(
+                          """
 Hi I am Keano Chang. Lorem ipsum dolor sit amet consectetur. 
                      
 Sed odio tristique a libero. Habitant duis congue nunc etiam malesuada risus. Tellus rhoncus vel est arcu.
 
 Lorem ipsum dolor sit amet consectetur. Sed odio tristique a libero. Habitant duis congue nunc etiam malesuada risus. Tellus rhoncus vel est arcu.Ornare nisi sed odio id. Eget in vestibulum lorem lectus justo enim.""",
-                        style: AppFonts.regular(15, AppColors.textDarkGray),
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 16),
-                      const DashLineView(
-                        dashColor: AppColors.dashLineColor,
-                        fillRate: 0.7,
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        width: double.maxFinite,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Edit Description",
-                                recognizer: TapGestureRecognizer()..onTap = () {},
-                                style: const TextStyle(
-                                  color: AppColors.textBlue,
-                                  fontFamily: "Mulish",
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 17,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
-                          ),
+                          style: AppFonts.regular(15, AppColors.textDarkGray),
                           textAlign: TextAlign.left,
                         ),
-                      ),
+                        const SizedBox(height: 16),
+                        const DashLineView(
+                          dashColor: AppColors.dashLineColor,
+                          fillRate: 0.7,
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.maxFinite,
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Edit Description",
+                                  recognizer: TapGestureRecognizer()..onTap = () {},
+                                  style: const TextStyle(
+                                    color: AppColors.textBlue,
+                                    fontFamily: "Mulish",
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 17,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 14),
                     ],
                   ),

@@ -20,7 +20,7 @@ class CustomHomeAppBar extends StatelessWidget {
       shadowColor: AppColors.backgroundDarkGray.withOpacity(0.2),
       color: AppColors.backgroundWhite,
       child: Container(
-        height: 80,
+        height: 50,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         // decoration: BoxDecoration(boxShadow: <BoxShadow>[BoxShadow(color: AppColors.backgroundDarkGray.withOpacity(0.1), blurRadius: 15.0, offset: Offset(0.0, 0.75))], color: AppColors.white),
         child: Row(
@@ -32,7 +32,7 @@ class CustomHomeAppBar extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.left,
-                  style: AppFonts.semiBold(25, AppColors.textDarkGray),
+                  style: AppFonts.semiBold(20, AppColors.textDarkGray),
                 )
               ],
             ),

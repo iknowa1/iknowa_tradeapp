@@ -21,6 +21,10 @@ import 'package:trade_app/screens/biometric_authentication_screen/binding/bio_me
 import 'package:trade_app/screens/biometric_authentication_screen/view/bio_metric_authentication_screen.dart';
 import 'package:trade_app/screens/dashboard_module/profile_screen/binding/profile_binding.dart';
 import 'package:trade_app/screens/dashboard_module/profile_screen/view/profile_screen.dart';
+import 'package:trade_app/screens/dashboard_module/trade_passport_screen/view/tarde_gallery_screen/gallary_list_screen/binding/trade_gallery_list_binding.dart';
+import 'package:trade_app/screens/dashboard_module/trade_passport_screen/view/tarde_gallery_screen/gallary_list_screen/view/trade_gallery_list_screen.dart';
+import 'package:trade_app/screens/dashboard_module/trade_passport_screen/view/trade_certificate_screen/add_certificate_screen/controller/add_certificate_controller.dart';
+import 'package:trade_app/screens/dashboard_module/trade_passport_screen/view/trade_insurance_screen/add_insurance_screen/binding/add_insurance_binding.dart';
 import 'package:trade_app/screens/dashboard_screen/binding/dashboard_binding.dart';
 import 'package:trade_app/screens/dashboard_screen/view/dashboard_screen.dart';
 import 'package:trade_app/screens/forgot_password_email_link_screen/binding/forgot_password_email_link_binding.dart';
@@ -35,6 +39,13 @@ import 'package:trade_app/screens/reset_password_screen/reset_password_binding/r
 import 'package:trade_app/screens/reset_password_screen/reset_password_view/reset_password_screen.dart';
 import 'package:trade_app/screens/set_passcode_screen/binding/set_passcode_binding.dart';
 import 'package:trade_app/screens/set_passcode_screen/view/set_passcode_screen.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_certificate_screen/add_certificate_screen/binding/add_certificate_binding.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_certificate_screen/add_certificate_screen/view/add_certificate_screen.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_insurance_screen/add_insurance_screen/view/add_insurance_screen.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_service_screen/add_service_screen/bindings/service_bindings.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_service_screen/add_service_screen/view/add_service_screen.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_service_screen/edit_service_screen/binding/edit_service_binding.dart';
+import '../screens/dashboard_module/trade_passport_screen/view/trade_service_screen/edit_service_screen/view/edit_service_screen.dart';
 import '../screens/forgot_password_screen/binding/forgot_password_binding.dart';
 import '../screens/login_screen/bindings/login_bindings.dart';
 import '../screens/splash_screen/view/splash_screen.dart';
@@ -133,5 +144,10 @@ class AppPages {
       page: () => const ProfileScreen(),
       binding: ProfileBinding(),
     ),
+    GetPage(name: Routes.addCertificateScreen, page: () => AddCertificateScreen(), binding: AddCertificateBinding()),
+    GetPage(name: Routes.addInsuranceScreen, page: () => const AddInsuranceScreen(), binding: AddInsuranceBinding()),
+    GetPage(name: Routes.tradePassportGalleryList, page: () => const TradeGalleryListScreen(), binding: TradeGalleryListBinding()),
+    GetPage(name: Routes.addService, page: () => const AddServiceScreen(), binding: ServiceBindings()),
+    GetPage(name: Routes.editService, page: () => const EditServiceScreen(), binding: EditServiceBinding())
   ];
 }

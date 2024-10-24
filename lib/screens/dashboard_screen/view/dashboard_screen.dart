@@ -23,10 +23,10 @@ class DashboardScreen extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      backgroundColor: AppColors.backgroundLightBlue,
+      backgroundColor: AppColors.backgroundWhite,
       body: SafeArea(
         bottom: false,
-        top: false,
+        top: true,
         child: Column(
           children: [
             Expanded(

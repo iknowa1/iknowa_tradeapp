@@ -23,4 +23,11 @@ abstract class Routes {
   static const setbiometricPascode = '/setbiometricPascode';
   static const dashboard = '/dashboard';
   static const dashboardProfile = '/dashboardProfile';
+
+  static const tradePassportGalleryList = '/tradePassportGalleryList';
+  static const addInsuranceScreen = "/addInsuranceScreen";
+  static const addCertificateScreen = "/addCertificateScreen";
+
+  static const addService = '/addService';
+  static const editService = '/editService';
 }

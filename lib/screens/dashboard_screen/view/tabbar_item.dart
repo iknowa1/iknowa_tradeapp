@@ -16,7 +16,7 @@ class TabbarItem extends StatelessWidget {
             child: Column(
               children: [
                 AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 300),
                     decoration: BoxDecoration(color: isSelected ? const Color.fromRGBO(255, 165, 0, 1) : Colors.transparent, shape: BoxShape.circle),
                     height: 38,
                     width: 38,

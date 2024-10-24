@@ -28,147 +28,559 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-        backgroundColor: AppColors.backgroundWhite,
-        body: SafeArea(
-          child: Column(
-            children: [
-              CustomHomeAppBar(title: "Home", onTap: () {}),
-              const SizedBox(
-                height: 3,
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: double.maxFinite,
-                    color: AppColors.backgroundLightBlue,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const JobsNearYouView(),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Obx(() {
-                          if (controller.addBusinessAddress.value)
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: AppColors.backgroundYellow),
-                                    color: AppColors.backgroundYellow.withOpacity(0.16),
-                                    borderRadius: BorderRadius.circular(8),
+    return Column(
+      children: [
+        CustomHomeAppBar(title: "Home", onTap: () {}),
+        const SizedBox(
+          height: 3,
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Container(
+              width: double.maxFinite,
+              color: AppColors.backgroundLightBlue,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const JobsNearYouView(),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Obx(() {
+                    if (controller.addBusinessAddress.value)
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.backgroundYellow),
+                              color: AppColors.backgroundYellow.withOpacity(0.16),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            height: 80,
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 20),
+                                ClipOval(
+                                  child: SvgPicture.asset(
+                                    ImagePath.addressAlert,
+                                    width: 45,
+                                    height: 45,
+                                    fit: BoxFit.fitWidth,
                                   ),
-                                  height: 80,
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 20),
-                                      ClipOval(
-                                        child: SvgPicture.asset(
-                                          ImagePath.addressAlert,
-                                          width: 45,
-                                          height: 45,
-                                          fit: BoxFit.fitWidth,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 20,
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Container(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(
-                                                height: 20,
+                                        Text(
+                                          "Next Action for workstation setup: ",
+                                          style: AppFonts.medium(15, AppColors.textDarkGray),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                        Container(
+                                          width: double.maxFinite,
+                                          margin: const EdgeInsets.only(top: 5),
+                                          child: Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: "Add business Address",
+                                                  recognizer: TapGestureRecognizer()..onTap = () {},
+                                                  style: const TextStyle(
+                                                    color: AppColors.textDarkGray,
+                                                    fontFamily: "Mulish",
+                                                    fontWeight: FontWeight.w800,
+                                                    fontSize: 15,
+                                                    decoration: TextDecoration.underline,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )),
+                      );
+                    else
+                      return SizedBox();
+                  }),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Solo trader dialog
+                  Obx(() {
+                    if (controller.userDetailModel.value?.userBusinessDetails?.type == "soletrader") {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                        child: Container(
+                            width: double.maxFinite,
+                            padding: EdgeInsets.only(top: Dimen.margin0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                                width: 2,
+                              ),
+                              color: AppColors.backgroundWhite,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 15),
+                                    Obx(() {
+                                      return Container(
+                                        width: 110,
+                                        height: 110,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(Dimen.margin6),
+                                        ),
+                                        child: controller.workStationData.value?.profileImage?.isNotEmpty == true
+                                            ? CachedNetworkImage(
+                                                imageUrl: "${UrlProvider.imageUrl}${controller.workStationData.value?.profileImage}",
+                                                width: 110,
+                                                height: 110,
+                                                fit: BoxFit.fill,
+                                              )
+                                            : Image.asset(
+                                                ImagePath.user1,
+                                                width: 110,
+                                                height: 110,
+                                                fit: BoxFit.fitWidth,
                                               ),
-                                              Text(
-                                                "Next Action for workstation setup: ",
-                                                style: AppFonts.medium(15, AppColors.textDarkGray),
+                                      );
+                                    }),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Container(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Container(
+                                              height: 35,
+                                              width: 140,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.backgroundYellow,
+                                                borderRadius: BorderRadius.circular(8), //
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 15,
+                                                  ),
+                                                  SvgPicture.asset(
+                                                    ImagePath.soleTrader,
+                                                    width: 15,
+                                                    fit: BoxFit.fitWidth,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Obx(() {
+                                                    return Text(
+                                                      controller.workStationData.value?.workstationAccountType?.name ?? "",
+                                                      style: AppFonts.bold(13, AppColors.textWhite),
+                                                    );
+                                                  }),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Obx(() {
+                                              return Text(
+                                                controller.workStationData.value?.name ?? "",
+                                                style: AppFonts.semiBold(20, AppColors.textDarkGray),
+                                                textAlign: TextAlign.left,
+                                              );
+                                            }),
+                                            Container(
+                                              width: double.maxFinite,
+                                              margin: const EdgeInsets.only(top: 5),
+                                              child: Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: "Add business Address",
+                                                      recognizer: TapGestureRecognizer()..onTap = () {},
+                                                      style: const TextStyle(
+                                                        color: AppColors.textBlue,
+                                                        fontFamily: "Mulish",
+                                                        fontWeight: FontWeight.w800,
+                                                        fontSize: 15,
+                                                        decoration: TextDecoration.underline,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                                 textAlign: TextAlign.left,
                                               ),
-                                              Container(
-                                                width: double.maxFinite,
-                                                margin: const EdgeInsets.only(top: 5),
-                                                child: Text.rich(
-                                                  TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text: "Add business Address",
-                                                        recognizer: TapGestureRecognizer()..onTap = () {},
-                                                        style: const TextStyle(
-                                                          color: AppColors.textDarkGray,
-                                                          fontFamily: "Mulish",
-                                                          fontWeight: FontWeight.w800,
-                                                          fontSize: 15,
-                                                          decoration: TextDecoration.underline,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Obx(() {
+                                                  return Text(
+                                                    controller.userProjectRating.isEmpty ? "0" : controller.userProjectRating.length.toString(),
+                                                    style: AppFonts.semiBold(22, AppColors.textDarkGray),
+                                                    textAlign: TextAlign.left,
+                                                  );
+                                                }),
+                                                Text(
+                                                  "/5",
+                                                  style: AppFonts.semiBold(17, AppColors.textDarkGray),
                                                   textAlign: TextAlign.left,
                                                 ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Obx(() {
+                                                  return RatingBar.readOnly(
+                                                    size: 30,
+                                                    filledIcon: Icons.star_rounded,
+                                                    emptyIcon: Icons.star_rounded,
+                                                    initialRating: controller.userProjectRating.isEmpty ? 0 : controller.userProjectRating.length.toDouble(),
+                                                    filledColor: AppColors.backgroundYellow,
+                                                    emptyColor: AppColors.backgroundDarkGray.withOpacity(0.24),
+                                                    maxRating: 5,
+                                                  );
+                                                })
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: DashLineView(
+                                    dashColor: AppColors.dashLineColor,
+                                    fillRate: 0.8,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Container(
+                                    width: double.maxFinite,
+                                    margin: const EdgeInsets.only(top: 5),
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: "Manage Trade Passport",
+                                            recognizer: TapGestureRecognizer()..onTap = () {},
+                                            style: const TextStyle(
+                                              color: AppColors.textBlue,
+                                              fontFamily: "Mulish",
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 17,
+                                              decoration: TextDecoration.underline,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            )),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  }),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  WorkStationFlowView(homeController: controller),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                      child: Container(
+                          width: double.maxFinite,
+                          padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                              width: 2,
+                            ),
+                            color: AppColors.backgroundWhite,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const SemiboldTitleText(title: "Job Overview"),
+                                  const Spacer(),
+                                  SeeAllTextView(text: "Manage Jobs", onTap: () {}),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                  width: double.maxFinite,
+                                  child: Text(
+                                    "01 Team Members",
+                                    style: AppFonts.regular(15, AppColors.textDarkGray),
+                                  )),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const DashLineView(
+                                dashColor: AppColors.dashLineColor,
+                                fillRate: 0.8,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              JobOverViewSection(
+                                homeController: controller,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          ))),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                      child: Container(
+                          width: double.maxFinite,
+                          padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                              width: 2,
+                            ),
+                            color: AppColors.backgroundWhite,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const SemiboldTitleText(title: "Teams"),
+                                  const Spacer(),
+                                  SeeAllTextView(text: "Manage Teams", onTap: () {}),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                  width: double.maxFinite,
+                                  child: Obx(() {
+                                    return Text(
+                                      "${controller.workStationTeamMemberList.length} Team Members",
+                                      style: AppFonts.regular(15, AppColors.textDarkGray),
+                                    );
+                                  })),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const DashLineView(
+                                dashColor: AppColors.dashLineColor,
+                                fillRate: 0.8,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              SizedBox(
+                                height: Dimen.margin60,
+                                width: double.infinity,
+                                child: Obx(() {
+                                  return ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    padding: EdgeInsets.zero,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        // height: Dimen.margin207,
+                                        width: 50,
+                                        padding: const EdgeInsets.only(bottom: Dimen.margin2),
+                                        child: Container(
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(30),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              ClipOval(
+                                                child: controller.workStationTeamMemberList[index].userWorkstation?.user?.userPublicProfile!.profileImage != null
+                                                    ? CachedNetworkImage(
+                                                        imageUrl: "${UrlProvider.imageUrl}${controller.workStationTeamMemberList[index].userWorkstation?.user?.userPublicProfile?.profileImage}",
+                                                        width: 50,
+                                                        height: 50,
+                                                        fit: BoxFit.fill,
+                                                      )
+                                                    : Container(
+                                                        width: 50,
+                                                        height: 50,
+                                                        color: Colors.blue,
+                                                        child: Obx(() {
+                                                          return Center(
+                                                            child: Text(
+                                                                style: AppFonts.medium(15.0, AppColors.textWhite),
+                                                                controller.workStationTeamMemberList[index].userWorkstation?.user?.firstName != null
+                                                                    ? "${controller.workStationTeamMemberList[index].userWorkstation?.user!.firstName?[0] ?? ""}${controller.workStationTeamMemberList[index].userWorkstation?.user!.lastName?[0] ?? ""}"
+                                                                    : controller.workStationTeamMemberList[index].userWorkstation?.name?[0] ?? ""),
+                                                          );
+                                                        }),
+                                                      )
+                                                // Image.asset(
+                                                //         ImagePath.user1,
+                                                //         width: 50,
+                                                //         height: 50,
+                                                //         fit: BoxFit.fill,
+                                                //       )
+                                                ,
                                               ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
+                                              Positioned(
+                                                  left: 35,
+                                                  child: ClipOval(
+                                                    child: Container(
+                                                      color: AppColors.backgroundRed,
+                                                      height: 10,
+                                                      width: 10,
+                                                    ),
+                                                  ))
                                             ],
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  )),
-                            );
-                          else
-                            return SizedBox();
-                        }),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        // Solo trader dialog
-                        Obx(() {
-                          if (controller.userDetailModel.value?.userBusinessDetails?.type == "soletrader") {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
-                              child: Container(
+                                      );
+                                    },
+                                    separatorBuilder: (context, index) => const SizedBox(width: Dimen.margin15),
+                                    itemCount: controller.workStationTeamMemberList.length,
+                                  );
+                                }),
+                              )
+                            ],
+                          ))),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                      child: Container(
+                          width: double.maxFinite,
+                          padding: EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                              width: 2,
+                            ),
+                            color: AppColors.backgroundWhite,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SemiboldTitleText(title: "Trade Network"),
+                                  Spacer(),
+                                  // SeeAllTextView(text: "Manage Teams", onTap: () {}),
+                                  // SizedBox(
+                                  //   width: 10,
+                                  // ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Obx(() {
+                                return Container(
+                                    width: double.maxFinite,
+                                    child: Text(
+                                      "${controller.workStationTradeNetworkList.length} Team Members",
+                                      style: AppFonts.regular(15, AppColors.textDarkGray),
+                                    ));
+                              }),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              DashLineView(
+                                dashColor: AppColors.dashLineColor,
+                                fillRate: 0.8,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
                                   width: double.maxFinite,
-                                  padding: EdgeInsets.only(top: Dimen.margin0),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black.withOpacity(0.1), // Changed to black for testing
-                                      width: 2,
-                                    ),
-                                    color: AppColors.backgroundWhite,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
                                   child: Column(
                                     children: [
                                       Row(
                                         children: [
-                                          const SizedBox(width: 15),
-                                          Obx(() {
-                                            return Container(
-                                              width: 110,
-                                              height: 110,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(Dimen.margin6),
-                                              ),
-                                              child: controller.workStationData.value?.profileImage?.isNotEmpty == true
-                                                  ? CachedNetworkImage(
-                                                      imageUrl: "${UrlProvider.imageUrl}${controller.workStationData.value?.profileImage}",
-                                                      width: 110,
-                                                      height: 110,
-                                                      fit: BoxFit.fill,
-                                                    )
-                                                  : Image.asset(
-                                                      ImagePath.user1,
-                                                      width: 110,
-                                                      height: 110,
-                                                      fit: BoxFit.fitWidth,
-                                                    ),
-                                            );
-                                          }),
+                                          const SizedBox(width: 5),
+                                          ClipRect(
+                                            child: SvgPicture.asset(
+                                              ImagePath.networkConnection,
+                                              width: 100,
+                                              height: 100,
+                                              fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Container(
@@ -180,33 +592,20 @@ class HomeScreen extends GetView<HomeController> {
                                                     height: 15,
                                                   ),
                                                   Container(
-                                                    height: 35,
+                                                    height: 30,
                                                     width: 140,
                                                     decoration: BoxDecoration(
-                                                      color: AppColors.backgroundYellow,
+                                                      color: AppColors.textBlue,
                                                       borderRadius: BorderRadius.circular(8), //
                                                     ),
-                                                    child: Row(
+                                                    child: Column(
                                                       children: [
                                                         SizedBox(
-                                                          width: 15,
+                                                          height: 5,
                                                         ),
-                                                        SvgPicture.asset(
-                                                          ImagePath.soleTrader,
-                                                          width: 15,
-                                                          fit: BoxFit.fitWidth,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Obx(() {
-                                                          return Text(
-                                                            controller.workStationData.value?.workstationAccountType?.name ?? "",
-                                                            style: AppFonts.bold(13, AppColors.textWhite),
-                                                          );
-                                                        }),
-                                                        SizedBox(
-                                                          width: 5,
+                                                        Text(
+                                                          "Add Trade Network",
+                                                          style: AppFonts.bold(13, AppColors.textWhite),
                                                         ),
                                                       ],
                                                     ),
@@ -214,68 +613,11 @@ class HomeScreen extends GetView<HomeController> {
                                                   const SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Obx(() {
-                                                    return Text(
-                                                      controller.workStationData.value?.name ?? "",
-                                                      style: AppFonts.semiBold(20, AppColors.textDarkGray),
-                                                      textAlign: TextAlign.left,
-                                                    );
-                                                  }),
-                                                  Container(
-                                                    width: double.maxFinite,
-                                                    margin: const EdgeInsets.only(top: 5),
-                                                    child: Text.rich(
-                                                      TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text: "Add business Address",
-                                                            recognizer: TapGestureRecognizer()..onTap = () {},
-                                                            style: const TextStyle(
-                                                              color: AppColors.textBlue,
-                                                              fontFamily: "Mulish",
-                                                              fontWeight: FontWeight.w800,
-                                                              fontSize: 15,
-                                                              decoration: TextDecoration.underline,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      textAlign: TextAlign.left,
-                                                    ),
+                                                  Text(
+                                                    "Your Trade Network will appear here",
+                                                    style: AppFonts.regular(13, AppColors.textDarkGray),
+                                                    textAlign: TextAlign.left,
                                                   ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Obx(() {
-                                                        return Text(
-                                                          controller.userProjectRating.isEmpty ? "0" : controller.userProjectRating.length.toString(),
-                                                          style: AppFonts.semiBold(22, AppColors.textDarkGray),
-                                                          textAlign: TextAlign.left,
-                                                        );
-                                                      }),
-                                                      Text(
-                                                        "/5",
-                                                        style: AppFonts.semiBold(17, AppColors.textDarkGray),
-                                                        textAlign: TextAlign.left,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Obx(() {
-                                                        return RatingBar.readOnly(
-                                                          size: 30,
-                                                          filledIcon: Icons.star_rounded,
-                                                          emptyIcon: Icons.star_rounded,
-                                                          initialRating: controller.userProjectRating.isEmpty ? 0 : controller.userProjectRating.length.toDouble(),
-                                                          filledColor: AppColors.backgroundYellow,
-                                                          emptyColor: AppColors.backgroundDarkGray.withOpacity(0.24),
-                                                          maxRating: 5,
-                                                        );
-                                                      })
-                                                    ],
-                                                  )
                                                 ],
                                               ),
                                             ),
@@ -285,391 +627,45 @@ class HomeScreen extends GetView<HomeController> {
                                       SizedBox(
                                         height: 20,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        child: DashLineView(
-                                          dashColor: AppColors.dashLineColor,
-                                          fillRate: 0.8,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        child: Container(
-                                          width: double.maxFinite,
-                                          margin: const EdgeInsets.only(top: 5),
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Manage Trade Passport",
-                                                  recognizer: TapGestureRecognizer()..onTap = () {},
-                                                  style: const TextStyle(
-                                                    color: AppColors.textBlue,
-                                                    fontFamily: "Mulish",
-                                                    fontWeight: FontWeight.w800,
-                                                    fontSize: 17,
-                                                    decoration: TextDecoration.underline,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
                                     ],
-                                  )),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        WorkStationFlowView(homeController: controller),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
-                            child: Container(
-                                width: double.maxFinite,
-                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black.withOpacity(0.1), // Changed to black for testing
-                                    width: 2,
-                                  ),
-                                  color: AppColors.backgroundWhite,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const SemiboldTitleText(title: "Job Overview"),
-                                        const Spacer(),
-                                        SeeAllTextView(text: "Manage Jobs", onTap: () {}),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                        width: double.maxFinite,
-                                        child: Text(
-                                          "01 Team Members",
-                                          style: AppFonts.regular(15, AppColors.textDarkGray),
-                                        )),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    const DashLineView(
-                                      dashColor: AppColors.dashLineColor,
-                                      fillRate: 0.8,
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    JobOverViewSection(
-                                      homeController: controller,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    )
-                                  ],
-                                ))),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
-                            child: Container(
-                                width: double.maxFinite,
-                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black.withOpacity(0.1), // Changed to black for testing
-                                    width: 2,
-                                  ),
-                                  color: AppColors.backgroundWhite,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Column(
-                                  children: [
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const SemiboldTitleText(title: "Teams"),
-                                        const Spacer(),
-                                        SeeAllTextView(text: "Manage Teams", onTap: () {}),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    SizedBox(
-                                        width: double.maxFinite,
-                                        child: Obx(() {
-                                          return Text(
-                                            "${controller.workStationTeamMemberList.length} Team Members",
-                                            style: AppFonts.regular(15, AppColors.textDarkGray),
-                                          );
-                                        })),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    const DashLineView(
-                                      dashColor: AppColors.dashLineColor,
-                                      fillRate: 0.8,
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    SizedBox(
-                                      height: Dimen.margin60,
-                                      width: double.infinity,
-                                      child: Obx(() {
-                                        return ListView.separated(
-                                          scrollDirection: Axis.horizontal,
-                                          padding: EdgeInsets.zero,
-                                          itemBuilder: (context, index) {
-                                            return Container(
-                                              // height: Dimen.margin207,
-                                              width: 50,
-                                              padding: const EdgeInsets.only(bottom: Dimen.margin2),
-                                              child: Container(
-                                                height: 60,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(30),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    ClipOval(
-                                                      child: controller.workStationTeamMemberList[index].userWorkstation?.user?.userPublicProfile!.profileImage != null
-                                                          ? CachedNetworkImage(
-                                                              imageUrl: "${UrlProvider.imageUrl}${controller.workStationTeamMemberList[index].userWorkstation?.user?.userPublicProfile?.profileImage}",
-                                                              width: 50,
-                                                              height: 50,
-                                                              fit: BoxFit.fill,
-                                                            )
-                                                          : Container(
-                                                              width: 50,
-                                                              height: 50,
-                                                              color: Colors.blue,
-                                                              child: Obx(() {
-                                                                return Center(
-                                                                  child: Text(
-                                                                      style: AppFonts.medium(15.0, AppColors.textWhite),
-                                                                      controller.workStationTeamMemberList[index].userWorkstation?.user?.firstName != null
-                                                                          ? "${controller.workStationTeamMemberList[index].userWorkstation?.user!.firstName?[0] ?? ""}${controller.workStationTeamMemberList[index].userWorkstation?.user!.lastName?[0] ?? ""}"
-                                                                          : controller.workStationTeamMemberList[index].userWorkstation?.name?[0] ?? ""),
-                                                                );
-                                                              }),
-                                                            )
-                                                      // Image.asset(
-                                                      //         ImagePath.user1,
-                                                      //         width: 50,
-                                                      //         height: 50,
-                                                      //         fit: BoxFit.fill,
-                                                      //       )
-                                                      ,
-                                                    ),
-                                                    Positioned(
-                                                        left: 35,
-                                                        child: ClipOval(
-                                                          child: Container(
-                                                            color: AppColors.backgroundRed,
-                                                            height: 10,
-                                                            width: 10,
-                                                          ),
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          separatorBuilder: (context, index) => const SizedBox(width: Dimen.margin15),
-                                          itemCount: controller.workStationTeamMemberList.length,
-                                        );
-                                      }),
-                                    )
-                                  ],
-                                ))),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
-                            child: Container(
-                                width: double.maxFinite,
-                                padding: EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin20, right: Dimen.margin20),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black.withOpacity(0.1), // Changed to black for testing
-                                    width: 2,
-                                  ),
-                                  color: AppColors.backgroundWhite,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SemiboldTitleText(title: "Trade Network"),
-                                        Spacer(),
-                                        // SeeAllTextView(text: "Manage Teams", onTap: () {}),
-                                        // SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Obx(() {
-                                      return Container(
-                                          width: double.maxFinite,
-                                          child: Text(
-                                            "${controller.workStationTradeNetworkList.length} Team Members",
-                                            style: AppFonts.regular(15, AppColors.textDarkGray),
-                                          ));
-                                    }),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    DashLineView(
-                                      dashColor: AppColors.dashLineColor,
-                                      fillRate: 0.8,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                        width: double.maxFinite,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const SizedBox(width: 5),
-                                                ClipRect(
-                                                  child: SvgPicture.asset(
-                                                    ImagePath.networkConnection,
-                                                    width: 100,
-                                                    height: 100,
-                                                    fit: BoxFit.fitWidth,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Expanded(
-                                                  child: Container(
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        const SizedBox(
-                                                          height: 15,
-                                                        ),
-                                                        Container(
-                                                          height: 30,
-                                                          width: 140,
-                                                          decoration: BoxDecoration(
-                                                            color: AppColors.textBlue,
-                                                            borderRadius: BorderRadius.circular(8), //
-                                                          ),
-                                                          child: Column(
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                "Add Trade Network",
-                                                                style: AppFonts.bold(13, AppColors.textWhite),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text(
-                                                          "Your Trade Network will appear here",
-                                                          style: AppFonts.regular(13, AppColors.textDarkGray),
-                                                          textAlign: TextAlign.left,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                          ],
-                                        ))
-                                  ],
-                                ))),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
-                            child: Container(
-                                width: double.maxFinite,
-                                padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin0, right: Dimen.margin0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black.withOpacity(0.1), // Changed to black for testing
-                                    width: 2,
-                                  ),
-                                  color: AppColors.backgroundWhite,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Obx(() {
-                                  return CalendarControllerProvider(
-                                      controller: EventController()..addAll(controller.events),
-                                      child: Container(
-                                          height: MediaQuery.of(context).size.height * 0.6,
-                                          child: DayViewWidget(
-                                            onPressed: (dateValue) {
-                                              print("Home screen date is $dateValue");
-                                              controller.getCalendarEventByDate(dateValue);
-                                            },
-                                          )));
-                                }))),
-                      ],
-                    ),
+                                  ))
+                            ],
+                          ))),
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-              )
-            ],
+                  Padding(
+                      padding: const EdgeInsets.only(left: Dimen.margin20, right: Dimen.margin20),
+                      child: Container(
+                          width: double.maxFinite,
+                          padding: const EdgeInsets.only(top: Dimen.margin0, left: Dimen.margin0, right: Dimen.margin0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.1), // Changed to black for testing
+                              width: 2,
+                            ),
+                            color: AppColors.backgroundWhite,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Obx(() {
+                            return CalendarControllerProvider(
+                                controller: EventController()..addAll(controller.events),
+                                child: Container(
+                                    height: MediaQuery.of(context).size.height * 0.6,
+                                    child: DayViewWidget(
+                                      onPressed: (dateValue) {
+                                        print("Home screen date is $dateValue");
+                                        controller.getCalendarEventByDate(dateValue);
+                                      },
+                                    )));
+                          }))),
+                ],
+              ),
+            ),
           ),
-        ));
+        )
+      ],
+    );
   }
 }
 
